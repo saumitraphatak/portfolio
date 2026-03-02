@@ -3,1217 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saumitra Phatak — Quantum Physicist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <title>Saumitra Phatak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <style>
-    /* ── CSS Variables ── */
     :root {
-      --bg:        #05080f;
-      --bg2:       #0b1120;
-      --bg3:       #111827;
-      --accent:    #6ee7f7;
-      --accent2:   #a78bfa;
-      --accent3:   #34d399;
-      --text:      #e2e8f0;
-      --muted:     #94a3b8;
-      --border:    rgba(255,255,255,0.07);
-      --card:      rgba(255,255,255,0.04);
-      --glow:      0 0 40px rgba(110,231,247,0.15);
-      --radius:    14px;
-      --nav-h:     68px;
-      --sans:      'Space Grotesk', sans-serif;
-      --body:      'Inter', sans-serif;
-      --serif:     'Crimson Pro', serif;
+      --white:   #ffffff;
+      --off:     #f8f7f4;
+      --border:  #e8e5e0;
+      --text:    #1c1917;
+      --muted:   #6b7280;
+      --accent:  #1d4ed8;
+      --light-accent: #eff6ff;
+      --radius:  10px;
+      --max:     720px;
     }
 
-    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
+      background: var(--white);
       color: var(--text);
-      font-family: var(--body);
-      font-size: 16px;
-      line-height: 1.7;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
     }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    /* ── Canvas background ── */
-    #stars-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* ── Utility ── */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
-    .section { padding: 110px 0 90px; }
-    .section-label {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-family: var(--sans);
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-    .section-subtitle {
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 600px;
-      margin-bottom: 56px;
-    }
-    .tag {
-      display: inline-block;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(110,231,247,0.1);
-      color: var(--accent);
-      border: 1px solid rgba(110,231,247,0.2);
-      margin: 4px 4px 4px 0;
-    }
-    .tag.purple { background: rgba(167,139,250,0.1); color: var(--accent2); border-color: rgba(167,139,250,0.2); }
-    .tag.green  { background: rgba(52,211,153,0.1);  color: var(--accent3); border-color: rgba(52,211,153,0.2); }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .fade-in.visible { opacity: 1; transform: none; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      background: rgba(5,8,15,0.8);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
     }
-    .nav-inner {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-family: var(--sans);
-      font-size: 18px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-ext-links {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-small {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 7px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-small:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
-    .btn-small.primary { background: var(--accent); color: #05080f; border-color: var(--accent); }
-    .btn-small.primary:hover { opacity: 0.88; }
+    .nav-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
 
-    /* hamburger */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all 0.3s; }
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: var(--nav-h);
-      left: 0; right: 0;
-      background: rgba(5,8,15,0.97);
-      backdrop-filter: blur(14px);
-      padding: 24px 28px;
-      z-index: 99;
-      border-bottom: 1px solid var(--border);
-      flex-direction: column;
-      gap: 20px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-family: var(--sans); font-size: 15px; color: var(--muted); }
-    .mobile-menu a:hover { color: var(--text); }
+    /* ── LAYOUT ── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    section { padding: 72px 0 56px; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
 
     /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: var(--nav-h);
-      position: relative;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .hero-eyebrow {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 32px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
+    #hero { padding: 80px 0 64px; }
+    .hero-label {
+      font-size: 12px; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
     }
     .hero-name {
-      font-family: var(--sans);
-      font-size: clamp(40px, 6vw, 70px);
-      font-weight: 700;
-      line-height: 1.08;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family: 'Lora', serif;
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 600; line-height: 1.15;
+      color: var(--text); margin-bottom: 14px;
     }
     .hero-role {
-      font-family: var(--sans);
-      font-size: clamp(17px, 2.5vw, 22px);
-      color: var(--muted);
-      margin-bottom: 28px;
+      font-size: 16px; color: var(--muted); margin-bottom: 28px;
       font-weight: 400;
     }
-    .hero-desc {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.8;
-      margin-bottom: 40px;
+    .hero-intro {
+      font-size: 16px; color: var(--text); line-height: 1.8;
+      max-width: 620px; margin-bottom: 32px;
     }
-    .hero-cta {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 600;
-      padding: 13px 28px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: var(--radius);
+      font-size: 13px; font-weight: 500; transition: all .15s;
+      border: 1px solid transparent;
     }
     .btn-primary {
-      background: var(--accent);
-      color: #05080f;
-      border: none;
+      background: var(--accent); color: #fff;
+      border-color: var(--accent);
     }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary:hover { background: #1e40af; text-decoration: none; }
     .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: var(--white); color: var(--text);
+      border-color: var(--border);
     }
-    .btn-outline:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-1px); }
+    .btn-outline:hover { border-color: #aaa; text-decoration: none; }
 
-    /* Atom visual */
-    .hero-visual {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* ── SECTION HEADERS ── */
+    .sec-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
     }
-    .atom-wrapper {
-      position: relative;
-      width: 340px;
-      height: 340px;
+    .sec-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(22px, 3.5vw, 28px);
+      font-weight: 600; color: var(--text);
+      margin-bottom: 20px; line-height: 1.3;
     }
-    .atom-core {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 54px; height: 54px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #6ee7f7, #3b82f6);
-      box-shadow: 0 0 40px rgba(110,231,247,0.6), 0 0 80px rgba(110,231,247,0.3);
-      z-index: 3;
-    }
-    .orbit {
-      position: absolute;
-      top: 50%; left: 50%;
-      border-radius: 50%;
-      border: 1.5px solid rgba(110,231,247,0.25);
-      transform-origin: center;
-    }
-    .orbit-1 { width: 150px; height: 150px; margin: -75px 0 0 -75px; animation: spin1 4s linear infinite; }
-    .orbit-2 { width: 220px; height: 220px; margin: -110px 0 0 -110px; animation: spin2 7s linear infinite; transform: rotate(60deg); }
-    .orbit-3 { width: 310px; height: 310px; margin: -155px 0 0 -155px; animation: spin3 11s linear infinite; transform: rotate(120deg); }
-    .electron {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
-      top: -5px; left: 50%; margin-left: -5px;
-    }
-    .electron.purple { background: var(--accent2); box-shadow: 0 0 12px var(--accent2); }
-    .electron.green  { background: var(--accent3); box-shadow: 0 0 12px var(--accent3); }
-    @keyframes spin1 { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
-    @keyframes spin2 { from { transform: rotate(60deg); }  to { transform: rotate(420deg); } }
-    @keyframes spin3 { from { transform: rotate(120deg); } to { transform: rotate(480deg); } }
+    .sec-body { color: var(--text); line-height: 1.8; }
+    .sec-body p + p { margin-top: 14px; }
 
-    .hero-stats {
-      display: flex;
-      gap: 32px;
-      margin-top: 48px;
-    }
-    .stat-item { }
-    .stat-num {
-      font-family: var(--sans);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-    /* ── ABOUT ── */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 70px;
-      align-items: start;
-    }
-    .about-text p {
-      color: var(--muted);
-      margin-bottom: 18px;
-      font-size: 16px;
-      line-height: 1.85;
-    }
-    .about-text p strong { color: var(--text); font-weight: 600; }
-    .about-highlights {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .highlight-card {
-      background: var(--card);
+    /* ── RESEARCH CARDS ── */
+    .research-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+    .r-card {
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px 24px;
-      transition: border-color 0.2s, transform 0.2s;
+      padding: 20px 22px;
+      background: var(--off);
     }
-    .highlight-card:hover { border-color: rgba(110,231,247,0.2); transform: translateX(4px); }
-    .highlight-icon { font-size: 24px; margin-bottom: 10px; }
-    .highlight-title { font-family: var(--sans); font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    .highlight-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-    /* ── RESEARCH ── */
-    #research { background: var(--bg); }
-    .research-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-bottom: 56px;
+    .r-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      color: var(--accent); background: var(--light-accent);
+      padding: 2px 8px; border-radius: 4px;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: .05em;
     }
-    .research-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-    .research-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .research-card:hover { border-color: rgba(110,231,247,0.25); transform: translateY(-4px); box-shadow: var(--glow); }
-    .research-card:hover::before { opacity: 1; }
-    .rc-num {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      margin-bottom: 18px;
-    }
-    .rc-title {
-      font-family: var(--sans);
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-    .rc-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
-    .rc-tags { margin-top: 20px; }
-
-    .research-highlight {
-      background: linear-gradient(135deg, rgba(110,231,247,0.06) 0%, rgba(167,139,250,0.06) 100%);
-      border: 1px solid rgba(110,231,247,0.15);
-      border-radius: var(--radius);
-      padding: 36px 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
-      text-align: center;
-    }
-    .rh-num {
-      font-family: var(--sans);
-      font-size: 36px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .rh-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
-
-    /* ── TEACHING ── */
-    #teaching { background: var(--bg2); }
-    .teaching-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .teaching-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: border-color 0.2s;
-    }
-    .teaching-card:hover { border-color: rgba(167,139,250,0.25); }
-    .tc-course { font-family: var(--sans); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-    .tc-role { font-size: 13px; color: var(--accent2); font-weight: 500; margin-bottom: 10px; }
-    .tc-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .r-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .r-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
     /* ── PUBLICATIONS ── */
-    #publications { background: var(--bg); }
-    .pub-list { display: flex; flex-direction: column; gap: 20px; }
-    .pub-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 30px;
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-      transition: border-color 0.2s, transform 0.2s;
+    .pub-list { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+    .pub {
+      border-left: 3px solid var(--border);
+      padding-left: 16px;
     }
-    .pub-card:hover { border-color: rgba(52,211,153,0.25); transform: translateX(4px); }
-    .pub-year {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent3);
-      min-width: 48px;
-      padding-top: 2px;
-    }
-    .pub-body { flex: 1; }
-    .pub-title { font-family: var(--sans); font-size: 16px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
-    .pub-authors { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
-    .pub-journal { font-size: 13px; color: var(--accent3); font-style: italic; }
+    .pub-year { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+    .pub-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .pub-authors { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .pub-venue { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+    .pub-links { display: flex; gap: 10px; flex-wrap: wrap; }
     .pub-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      color: var(--accent);
-      margin-top: 10px;
-      transition: opacity 0.2s;
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      background: var(--light-accent); padding: 2px 8px; border-radius: 4px;
     }
-    .pub-link:hover { opacity: 0.75; }
+    .pub-link:hover { text-decoration: none; opacity: .8; }
 
-    /* ── PHILOSOPHY ── */
-    #philosophy { background: var(--bg2); }
-    .phil-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 40px;
-    }
-    .tab-btn {
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 24px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab-btn.active { background: var(--accent2); color: #fff; border-color: var(--accent2); }
-    .tab-btn:hover:not(.active) { color: var(--text); border-color: rgba(255,255,255,0.2); }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .blog-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 26px;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    .blog-card:hover { border-color: rgba(167,139,250,0.25); transform: translateY(-3px); }
-    .blog-date { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-    .blog-title { font-family: var(--sans); font-size: 17px; font-weight: 600; margin-bottom: 10px; line-height: 1.35; }
-    .blog-excerpt { font-size: 14px; color: var(--muted); line-height: 1.7; }
-    .poetry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .poem-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 30px 28px;
-      transition: border-color 0.2s;
-    }
-    .poem-card:hover { border-color: rgba(167,139,250,0.25); }
-    .poem-title { font-family: var(--serif); font-size: 22px; font-style: italic; margin-bottom: 18px; color: var(--accent2); }
-    .poem-text { font-family: var(--serif); font-size: 16px; line-height: 2; color: var(--muted); white-space: pre-line; }
+    /* ── TEACHING ── */
+    .teaching-list { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .t-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .t-role { font-size: 14px; font-weight: 500; }
+    .t-course { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .t-year { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
     /* ── CONNECT ── */
-    #connect { background: var(--bg); }
-    .connect-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 60px;
+    .connect-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .c-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: var(--radius);
+      border: 1px solid var(--border); font-size: 13px;
+      font-weight: 500; color: var(--text); background: var(--white);
+      transition: border-color .15s;
     }
-    .connect-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 26px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .connect-card:hover { border-color: rgba(110,231,247,0.2); transform: translateY(-3px); }
-    .cc-icon { font-size: 26px; }
-    .cc-label { font-family: var(--sans); font-size: 15px; font-weight: 600; }
-    .cc-desc { font-size: 13px; color: var(--muted); }
-    .cc-link { font-size: 13px; color: var(--accent); margin-top: auto; }
+    .c-link:hover { border-color: #999; text-decoration: none; }
+    .c-icon { font-size: 15px; }
 
-    /* site links banner */
-    .sites-banner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .site-card {
-      background: linear-gradient(135deg, rgba(110,231,247,0.06), rgba(167,139,250,0.06));
-      border: 1px solid rgba(110,231,247,0.15);
-      border-radius: var(--radius);
-      padding: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-    }
-    .site-card:hover { border-color: rgba(110,231,247,0.35); transform: translateY(-4px); box-shadow: var(--glow); }
-    .sc-info {}
-    .sc-label { font-size: 12px; color: var(--muted); font-family: var(--sans); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-    .sc-name { font-family: var(--sans); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-    .sc-desc { font-size: 14px; color: var(--muted); }
-    .sc-arrow {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: rgba(110,231,247,0.1);
-      border: 1px solid rgba(110,231,247,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .site-card:hover .sc-arrow { background: rgba(110,231,247,0.2); }
+    /* ── EDUCATION ── */
+    .edu-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+    .edu-item {}
+    .edu-degree { font-size: 14px; font-weight: 500; color: var(--text); }
+    .edu-school { font-size: 13px; color: var(--muted); }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 36px 0;
+      padding: 28px 24px;
       text-align: center;
-      position: relative;
-      z-index: 1;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
     }
-    .footer-name { font-family: var(--sans); font-weight: 700; font-size: 15px; margin-bottom: 6px; }
-    .footer-sub { font-size: 13px; color: var(--muted); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 800px) {
-      .hero-grid       { grid-template-columns: 1fr; }
-      .about-grid      { grid-template-columns: 1fr; gap: 40px; }
-      .teaching-grid   { grid-template-columns: 1fr; }
-      .sites-banner    { grid-template-columns: 1fr; }
-      .research-highlight { grid-template-columns: 1fr; gap: 20px; }
-      .nav-links, .nav-ext-links { display: none; }
-      .hamburger { display: flex; }
-      .hero-visual { display: none; }
-      .atom-wrapper { width: 240px; height: 240px; }
-    }
-    @media (max-width: 500px) {
-      .hero-stats { flex-wrap: wrap; gap: 20px; }
-      .pub-card { flex-direction: column; gap: 10px; }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .t-item { flex-direction: column; gap: 2px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Starfield canvas -->
-<canvas id="stars-canvas"></canvas>
-
-<!-- ── NAVIGATION ── -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">SP</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#teaching">Teaching</a></li>
-      <li><a href="#publications">Publications</a></li>
-      <li><a href="#philosophy">Philosophy</a></li>
-      <li><a href="#connect">Connect</a></li>
-    </ul>
-    <div class="nav-ext-links">
-      <a href="https://www.curious96.com" target="_blank" class="btn-small">curious96.com ↗</a>
-      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="btn-small primary">⚛ Quantum Explorer</a>
-    </div>
-    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
+<!-- NAV -->
+<nav>
+  <span class="nav-name">Saumitra Phatak</span>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#connect">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#about"        onclick="closeMenu()">About</a>
-  <a href="#research"     onclick="closeMenu()">Research</a>
-  <a href="#teaching"     onclick="closeMenu()">Teaching</a>
-  <a href="#publications" onclick="closeMenu()">Publications</a>
-  <a href="#philosophy"   onclick="closeMenu()">Philosophy</a>
-  <a href="#connect"      onclick="closeMenu()">Connect</a>
-  <hr style="border-color:var(--border);" />
-  <a href="https://www.curious96.com" target="_blank">curious96.com ↗</a>
-  <a href="https://quantumexplorer.streamlit.app" target="_blank">⚛ Quantum Explorer ↗</a>
-</div>
-
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section id="hero">
   <div class="container">
-    <div class="hero-grid">
-      <div class="fade-in">
-        <div class="hero-eyebrow">Quantum Physicist</div>
-        <h1 class="hero-name">Saumitra<br>Phatak</h1>
-        <p class="hero-role">PhD Candidate · Purdue University</p>
-        <p class="hero-desc">
-          Exploring the quantum frontier — cooling individual atoms to microkelvin temperatures,
-          assembling dipolar molecules, and engineering building blocks for tomorrow's quantum computers.
-        </p>
-        <div class="hero-cta">
-          <a href="#research" class="btn btn-primary">Explore Research ↓</a>
-          <a href="https://quantumexplorer.streamlit.app" target="_blank" class="btn btn-outline">⚛ Quantum Explorer</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-num">5th</div>
-            <div class="stat-label">Year PhD</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">5.5 D</div>
-            <div class="stat-label">LiCs Dipole Moment</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">μK</div>
-            <div class="stat-label">Target Temperature</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual fade-in">
-        <div class="atom-wrapper">
-          <div class="atom-core"></div>
-          <div class="orbit orbit-1"><div class="electron"></div></div>
-          <div class="orbit orbit-2"><div class="electron purple"></div></div>
-          <div class="orbit orbit-3"><div class="electron green"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── ABOUT ── -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="about-grid">
-      <div class="fade-in">
-        <p class="section-label">About Me</p>
-        <h2 class="section-title">Curiosity, forged in Mumbai.</h2>
-        <div class="about-text">
-          <p>
-            I'm a <strong>fifth-year Physics PhD candidate</strong> at Purdue University, working in
-            <strong>Dr. Jonathan Hood's laboratory</strong>. I grew up in Mumbai, where curiosity became
-            a core part of who I am — and that hasn't changed.
-          </p>
-          <p>
-            My doctoral research sits at the intersection of <strong>atomic, molecular, and optical (AMO)
-            physics</strong> and quantum engineering. I build and operate optical-tweezer platforms that
-            trap and cool individual lithium and cesium atoms down to the microkelvin regime.
-          </p>
-          <p>
-            Beyond the lab, I write — both <strong>physics blogs</strong> that explore ideas I find
-            fascinating, and <strong>poetry</strong> that emerges from the quieter corners of a
-            scientific life.
-          </p>
-          <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:8px;">
-            <span class="tag">AMO Physics</span>
-            <span class="tag">Quantum Computing</span>
-            <span class="tag purple">Optical Tweezers</span>
-            <span class="tag purple">Laser Cooling</span>
-            <span class="tag green">Quantum Information</span>
-            <span class="tag green">Polar Molecules</span>
-          </div>
-        </div>
-      </div>
-      <div class="about-highlights fade-in">
-        <div class="highlight-card">
-          <div class="highlight-icon">🎓</div>
-          <div class="highlight-title">Purdue University</div>
-          <div class="highlight-desc">PhD in Physics · Hood Laboratory · West Lafayette, Indiana</div>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">🌆</div>
-          <div class="highlight-title">From Mumbai, India</div>
-          <div class="highlight-desc">A city that shaped a deep sense of wonder and intellectual curiosity.</div>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">⚛️</div>
-          <div class="highlight-title">Research Focus</div>
-          <div class="highlight-desc">Optical tweezers · Laser cooling · Li-Cs molecule assembly · Dipolar quantum matter</div>
-        </div>
-        <div class="highlight-card">
-          <div class="highlight-icon">✍️</div>
-          <div class="highlight-title">Beyond the Lab</div>
-          <div class="highlight-desc">Writing physics blogs and poetry — exploring science through language.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── RESEARCH ── -->
-<section id="research" class="section">
-  <div class="container">
-    <p class="section-label fade-in">Research</p>
-    <h2 class="section-title fade-in">Engineering Quantum Matter,<br>One Atom at a Time.</h2>
-    <p class="section-subtitle fade-in">
-      Optical-tweezer experiments that cool, trap, and assemble atoms into exotic dipolar molecules
-      — building blocks for fault-tolerant quantum processors.
+    <p class="hero-label">Physics · Purdue University</p>
+    <h1 class="hero-name">Saumitra Phatak</h1>
+    <p class="hero-role">PhD Candidate · Department of Physics · Advised by Dr. Jonathan Hood</p>
+    <p class="hero-intro">
+      I'm a fifth-year PhD student in the Hood Lab at Purdue University, originally from Mumbai, India.
+      My research is in atomic, molecular, and optical (AMO) physics — specifically, trapping and cooling
+      individual atoms in optical tweezers to explore quantum interactions at the single-particle level.
     </p>
-
-    <div class="research-grid">
-      <div class="research-card fade-in">
-        <div class="rc-num">01 · LITHIUM</div>
-        <h3 class="rc-title">First ⁶Li Tweezer Trapping & Record Imaging</h3>
-        <p class="rc-desc">
-          Upon joining the lab in 2021, I helped commission a dual-species chamber and engineer
-          a 671 nm Zeeman slower to capture the first single ⁶Li atom in a 1064 nm optical
-          tweezer. We achieved <strong style="color:var(--text)">2,000 consecutive images with
-          99.95% survival probability</strong> — setting the benchmark for neutral-atom imaging
-          fidelity and supplying the lithium component for LiCs molecule assembly.
-        </p>
-        <div class="rc-tags">
-          <span class="tag">671 nm Zeeman Slower</span>
-          <span class="tag">99.95% Survival</span>
-        </div>
-      </div>
-      <div class="research-card fade-in">
-        <div class="rc-num">02 · THEORY</div>
-        <h3 class="rc-title">Unified Sub-Doppler Cooling Framework</h3>
-        <p class="rc-desc">
-          The efficiency seen with lithium exposed gaps in the literature. We developed a
-          master-equation model treating motional and hyperfine dynamics on equal footing,
-          integrating polarization-gradient, gray-molasses, Λ-enhanced, and Raman/SSB schemes
-          into a single analytic formalism — producing a <strong style="color:var(--text)">cooling
-          phase diagram</strong> now widely used by AMO groups for ground-state preparation.
-        </p>
-        <div class="rc-tags">
-          <span class="tag purple">Master Equation</span>
-          <span class="tag purple">Gray Molasses</span>
-        </div>
-      </div>
-      <div class="research-card fade-in">
-        <div class="rc-num">03 · CESIUM</div>
-        <h3 class="rc-title">Narrow-Line Quadrupole Cooling of ¹³³Cs</h3>
-        <p class="rc-desc">
-          We exploited the narrow 6S₁∕₂ → 5D₅∕₂ electric-quadrupole transition (λ = 685 nm,
-          Γ/2π ≈ 117 kHz) using a Laguerre–Gaussian vortex beam for background-free imaging.
-          This delivered <strong style="color:var(--text)">99.58% state-detection fidelity</strong>
-          and cooled Cs to 5 µK (⟨n_rad⟩ ≈ 0.8) — the first quadrupole narrow-line cooling of
-          an alkali atom in a tweezer.
-        </p>
-        <div class="rc-tags">
-          <span class="tag green">685 nm Quadrupole</span>
-          <span class="tag green">LG Vortex Beam</span>
-        </div>
-      </div>
-      <div class="research-card fade-in">
-        <div class="rc-num">04 · OUTLOOK</div>
-        <h3 class="rc-title">Toward Dipolar LiCs Quantum Processors</h3>
-        <p class="rc-desc">
-          Li control, the unified cooling theory, and the Cs quadrupole toolbox jointly
-          enable deterministic assembly of ground-state LiCs molecules with a permanent dipole
-          moment of <strong style="color:var(--text)">~5.5 Debye</strong> — the largest among
-          bi-alkali dimers — supporting fast, high-fidelity two-qubit gates in scalable
-          neutral-atom quantum-information architectures.
-        </p>
-        <div class="rc-tags">
-          <span class="tag">5.5 Debye LiCs</span>
-          <span class="tag">Rydberg Gates</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="research-highlight fade-in">
-      <div>
-        <div class="rh-num">99.95%</div>
-        <div class="rh-label">⁶Li single-atom survival across 2,000 consecutive images — a world record at the time</div>
-      </div>
-      <div>
-        <div class="rh-num">99.58%</div>
-        <div class="rh-label">¹³³Cs state-detection fidelity via narrow-line quadrupole cooling</div>
-      </div>
-      <div>
-        <div class="rh-num">~5.5 D</div>
-        <div class="rh-label">LiCs ground-state dipole moment — largest among bi-alkali dimers</div>
-      </div>
+    <div class="hero-links">
+      <a href="mailto:phataks@purdue.edu" class="btn btn-primary">✉ Email me</a>
+      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank" class="btn btn-outline">Google Scholar</a>
+      <a href="https://www.curious96.com" target="_blank" class="btn btn-outline">curious96.com ↗</a>
+      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="btn btn-outline">⚛ Quantum Explorer</a>
     </div>
   </div>
 </section>
 
-<!-- ── TEACHING ── -->
-<section id="teaching" class="section">
+<!-- RESEARCH -->
+<section id="research">
   <div class="container">
-    <p class="section-label fade-in">Teaching</p>
-    <h2 class="section-title fade-in">Sharing the Joy of Physics.</h2>
-    <p class="section-subtitle fade-in">
-      Teaching is integral to my identity as a scientist. I've served as a teaching assistant
-      and instructor at Purdue, working to make physics accessible and exciting.
-    </p>
-    <div class="teaching-grid">
-      <div class="teaching-card fade-in">
-        <div class="tc-course">Modern Mechanics & Modern Physics Labs</div>
-        <div class="tc-role">Graduate Teaching Assistant · Purdue University</div>
-        <div class="tc-desc">
-          Ran weekly lab sessions, wrote grading rubrics, and guided over a hundred
-          undergraduates through optics and mechanics experiments. Integrated rigorous
-          data-analysis training during office hours, building research-level analytical skills.
-        </div>
-      </div>
-      <div class="teaching-card fade-in">
-        <div class="tc-course">AMO Physics for M.Sc. Students</div>
-        <div class="tc-role">Mini-Course Instructor · University of Mumbai · Summer 2023</div>
-        <div class="tc-desc">
-          Invited to deliver an eight-lecture series on atomic, molecular, and optical physics.
-          Combined laser-cooling simulations with structured assignments, introducing current
-          optical-tweezer techniques to M.Sc. students in India.
-        </div>
-      </div>
-      <div class="teaching-card fade-in">
-        <div class="tc-course">Quantum Explorer App</div>
-        <div class="tc-role">Creator & Developer · quantumexplorer.streamlit.app</div>
-        <div class="tc-desc">
-          Built an interactive web app to make quantum concepts visual and intuitive —
-          Bloch sphere, quantum gates, superposition, entanglement, and Born-rule measurement.
-          No physics background required. Publicly available and freely accessible.
-        </div>
-      </div>
-      <div class="teaching-card fade-in">
-        <div class="tc-course">Online AMO Lecture Series</div>
-        <div class="tc-role">Creator · YouTube Channel</div>
-        <div class="tc-desc">
-          Developed publicly available online lectures for AMO beginners: three foundational
-          lectures (first in Hindi, rest in English), a cesium-results talk introducing atomic
-          clock fundamentals, and a lithium talk on trapped-atom laser-cooling methodology.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PUBLICATIONS ── -->
-<section id="publications" class="section">
-  <div class="container">
-    <p class="section-label fade-in">Publications</p>
-    <h2 class="section-title fade-in">Research Output.</h2>
-    <p class="section-subtitle fade-in">
-      Peer-reviewed work from the Hood Lab at Purdue. For a full and up-to-date list,
-      see my <a href="https://scholar.google.com/citations?hl=en&user=sFSr0coAAAAJ" target="_blank" style="color:var(--accent);">Google Scholar profile ↗</a>.
-    </p>
-    <div class="pub-list">
-      <div class="pub-card fade-in">
-        <div class="pub-year">2025</div>
-        <div class="pub-body">
-          <div class="pub-title">Narrow-Line Electric Quadrupole Cooling and Background-Free Imaging of a Single Cs Atom with Spatially Structured Light</div>
-          <div class="pub-authors">Karl N. Blodgett*, <strong style="color:var(--text)">Saumitra S. Phatak*</strong>, Meng Raymond Chen, David Peana, Claire Pritts, Jonathan D. Hood</div>
-          <div class="pub-journal">Physical Review A · Vol. 112, 043109 · October 2025</div>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
-            <a href="https://arxiv.org/abs/2505.10540" target="_blank" class="pub-link">arXiv:2505.10540 ↗</a>
-            <a href="https://scholar.google.com/citations?hl=en&user=sFSr0coAAAAJ" target="_blank" class="pub-link" style="color:var(--accent3);">DOI: 10.1103/vr4g-h995 ↗</a>
-          </div>
-        </div>
-      </div>
-      <div class="pub-card fade-in">
-        <div class="pub-year">2024</div>
-        <div class="pub-body">
-          <div class="pub-title">Generalized Theory for Optical Cooling of a Trapped Atom with Spin</div>
-          <div class="pub-authors"><strong style="color:var(--text)">Saumitra S. Phatak</strong>, Karl N. Blodgett, David Peana, Meng Raymond Chen, Jonathan D. Hood</div>
-          <div class="pub-journal">Physical Review A · Vol. 110, 043116 · October 2024</div>
-          <a href="https://arxiv.org/abs/2406.19153" target="_blank" class="pub-link">arXiv:2406.19153 ↗</a>
-        </div>
-      </div>
-      <div class="pub-card fade-in">
-        <div class="pub-year">2023</div>
-        <div class="pub-body">
-          <div class="pub-title">Imaging a Li Atom in an Optical Tweezer 2000 Times with Enhanced Gray Molasses</div>
-          <div class="pub-authors">Karl N. Blodgett, David Peana, <strong style="color:var(--text)">Saumitra S. Phatak</strong>, Lane M. Terry, Maria Paula Montes, Jonathan D. Hood</div>
-          <div class="pub-journal">Physical Review Letters · Vol. 131, 083001 · August 2023</div>
-          <a href="https://arxiv.org/abs/2305.02405" target="_blank" class="pub-link">arXiv:2305.02405 ↗</a>
-        </div>
-      </div>
-      <div class="pub-card fade-in">
-        <div class="pub-year">—</div>
-        <div class="pub-body">
-          <div class="pub-title">See all publications on Google Scholar</div>
-          <div class="pub-authors">Full bibliography including preprints and conference proceedings.</div>
-          <a href="https://scholar.google.com/citations?hl=en&user=sFSr0coAAAAJ" target="_blank" class="pub-link">Open Google Scholar ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PHILOSOPHY ── -->
-<section id="philosophy" class="section">
-  <div class="container">
-    <p class="section-label fade-in">Philosophy</p>
-    <h2 class="section-title fade-in">Thinking Out Loud.</h2>
-    <p class="section-subtitle fade-in">
-      Science and art share the same root — a desire to understand. Here I explore both.
-    </p>
-    <div class="phil-tabs fade-in">
-      <button class="tab-btn active" onclick="switchTab('blogs')">📝 Blogs</button>
-      <button class="tab-btn" onclick="switchTab('poetry')">🌿 Poetry</button>
-    </div>
-
-    <div id="tab-blogs" class="tab-content active">
-      <div class="blog-grid">
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Life · International Student</div>
-          <div class="blog-title">Landing in the US for the very first time!</div>
-          <div class="blog-excerpt">First impressions, first flights, first culture shocks — arriving in America as a PhD student from Mumbai.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Life · Adjustment</div>
-          <div class="blog-title">First few weeks!</div>
-          <div class="blog-excerpt">Settling into PhD life, finding rhythms, and discovering what it really means to be far from home.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Life · Travel</div>
-          <div class="blog-title">The first trip back to India!</div>
-          <div class="blog-excerpt">Returning home after months abroad — what changes, what stays the same, and what you notice for the first time.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Reflection</div>
-          <div class="blog-title">I am confused!</div>
-          <div class="blog-excerpt">An honest, unfiltered reflection on doubt, direction, and finding clarity in uncertainty.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Language · Marathi</div>
-          <div class="blog-title">Tried one in my native language (Marathi)!</div>
-          <div class="blog-excerpt">Writing in Marathi — exploring whether the language you grew up in carries emotions differently.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Seasons · 2022</div>
-          <div class="blog-title">Fall 2022!</div>
-          <div class="blog-excerpt">A snapshot of life in the lab and outside it during a Midwest autumn — leaves, experiments, and everything between.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Travel · 2022</div>
-          <div class="blog-title">India trip 2022!</div>
-          <div class="blog-excerpt">Back in India for the holidays — the food, the noise, the family, and the feeling of belonging in two places at once.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Life · 2023</div>
-          <div class="blog-title">Summer of 23!</div>
-          <div class="blog-excerpt">Research breakthroughs, new friendships, and the particular magic of a PhD summer.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Mindset</div>
-          <div class="blog-title">Achievements don't need to be big!</div>
-          <div class="blog-excerpt">On redefining success — why the small wins matter as much as the big ones, especially in a PhD.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Family · Travel</div>
-          <div class="blog-title">Mom dad's first US trip!</div>
-          <div class="blog-excerpt">Seeing America through my parents' eyes for the first time — a deeply moving experience.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Life · 2024</div>
-          <div class="blog-title">Summer of 24!</div>
-          <div class="blog-excerpt">Another summer, more experiments, more growth — reflecting on how far the journey has come.</div>
-        </a>
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="blog-card">
-          <div class="blog-date">Physics · Philosophy</div>
-          <div class="blog-title">Quantum physics and Life...</div>
-          <div class="blog-excerpt">Drawing unexpected parallels between quantum mechanics and the unpredictable, beautiful nature of life itself.</div>
-        </a>
-      </div>
-      <p style="text-align:center; margin-top:32px;">
-        <a href="https://www.curious96.com/philosophy/blogs" target="_blank" class="btn btn-outline" style="display:inline-flex;">Read all blogs on curious96.com ↗</a>
+    <p class="sec-label">Research</p>
+    <h2 class="sec-title">Cooling and controlling individual atoms</h2>
+    <div class="sec-body">
+      <p>
+        I work in Dr. Jonathan Hood's lab, where we use tightly focused laser beams — optical tweezers —
+        to trap single neutral atoms and study them in isolation. My work involves developing cooling
+        techniques to bring atoms close to their motional ground state, and building toward
+        experiments with mixtures of lithium and cesium atoms.
       </p>
     </div>
 
-    <div id="tab-poetry" class="tab-content">
-      <div style="text-align:center; padding: 60px 20px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);">
-        <div style="font-size: 48px; margin-bottom: 20px;">🌿</div>
-        <h3 style="font-family: var(--serif); font-size: 28px; font-style: italic; color: var(--accent2); margin-bottom: 16px;">Poetry in Three Languages</h3>
-        <p style="color: var(--muted); max-width: 520px; margin: 0 auto 12px; line-height: 1.8;">
-          Growing up fluent in <strong style="color:var(--text)">Marathi, Hindi, and English</strong>,
-          I write poetry in all three — because in every language, emotions take over equally.
-        </p>
-        <p style="color: var(--muted); max-width: 520px; margin: 0 auto 32px; font-size:14px;">
-          My poems live on Instagram where they reach a wider audience. Follow along for new pieces.
-        </p>
-        <a href="https://www.instagram.com/curious_poem" target="_blank" class="btn btn-primary" style="display:inline-flex; margin: 0 auto;">
-          📷 @curious_poem on Instagram
-        </a>
-        <div style="margin-top: 24px;">
-          <a href="https://www.curious96.com/philosophy/poetry" target="_blank" class="btn btn-outline" style="display:inline-flex; margin: 0 auto;">
-            Visit Poetry Page on curious96.com ↗
-          </a>
+    <div class="research-grid">
+
+      <div class="r-card">
+        <span class="r-tag">Lithium</span>
+        <div class="r-title">Single ⁶Li atom in an optical tweezer</div>
+        <div class="r-desc">
+          We developed a way to load a single lithium-6 atom directly from a magneto-optical trap
+          into an optical tweezer, and used Λ-enhanced gray molasses cooling to image it with
+          high fidelity over many repeated exposures. This work also led to a theoretical framework
+          for optical cooling in tight traps.
         </div>
       </div>
+
+      <div class="r-card">
+        <span class="r-tag">Cesium</span>
+        <div class="r-title">Narrow-line cooling of ¹³³Cs</div>
+        <div class="r-desc">
+          We explored narrow-line quadrupole cooling of cesium atoms using the weak
+          6S₁/₂–5D₅/₂ transition, combined with vortex beams generated via a spatial light
+          modulator. This allowed us to cool Cs atoms to a few microkelvin and image them
+          with a suppressed background.
+        </div>
+      </div>
+
+      <div class="r-card">
+        <span class="r-tag">Future work</span>
+        <div class="r-title">Toward ultracold LiCs molecules</div>
+        <div class="r-desc">
+          The longer-term goal of the lab is to bring Li and Cs atoms together in shared tweezers,
+          perform Feshbach spectroscopy, and eventually form ground-state LiCs molecules.
+          The large mass imbalance between Li and Cs also makes sympathetic cooling an
+          interesting possibility to explore.
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ── CONNECT ── -->
-<section id="connect" class="section">
+<!-- PUBLICATIONS -->
+<section id="publications">
   <div class="container">
-    <p class="section-label fade-in">Connect</p>
-    <h2 class="section-title fade-in">Let's Talk Physics —<br>or Anything Else.</h2>
-    <p class="section-subtitle fade-in">
-      Always happy to hear from fellow researchers, students, or the simply curious.
+    <p class="sec-label">Publications</p>
+    <h2 class="sec-title">Research output</h2>
+    <p style="color:var(--muted); font-size:14px;">
+      Full list on
+      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank">Google Scholar ↗</a>
     </p>
 
-    <!-- Email CTA -->
-    <div class="fade-in" style="background: linear-gradient(135deg, rgba(110,231,247,0.06), rgba(167,139,250,0.06)); border: 1px solid rgba(110,231,247,0.15); border-radius: var(--radius); padding: 32px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom: 24px;">
-      <div>
-        <div style="font-family:var(--sans); font-size:18px; font-weight:700; margin-bottom:6px;">Get in touch</div>
-        <div style="color:var(--muted); font-size:14px;">Always happy to chat about physics, research, or collaborations.</div>
+    <div class="pub-list">
+
+      <div class="pub">
+        <div class="pub-year">2025 · Preprint</div>
+        <div class="pub-title">Narrow-line Quadrupole Cooling of a Cs Atom in a Tweezer</div>
+        <div class="pub-authors">K. N. Blodgett*, S. S. Phatak*, M. R. Chen, D. Peana, C. Pritts, J. D. Hood</div>
+        <div class="pub-venue">Submitted to Physical Review X — arXiv preprint</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2505.10540" target="_blank" class="pub-link">arXiv ↗</a>
+        </div>
       </div>
-      <a href="mailto:phataks@purdue.edu" class="btn btn-primary">✉️ phataks@purdue.edu</a>
-    </div>
 
-    <div class="connect-grid fade-in">
-      <a href="http://hoodlabpurdue.com" target="_blank" class="connect-card">
-        <div class="cc-icon">🔬</div>
-        <div class="cc-label">Hood Lab</div>
-        <div class="cc-desc">Our research group at Purdue University</div>
-        <div class="cc-link">hoodlabpurdue.com ↗</div>
-      </a>
-      <a href="https://scholar.google.com/citations?hl=en&user=sFSr0coAAAAJ" target="_blank" class="connect-card">
-        <div class="cc-icon">📄</div>
-        <div class="cc-label">Google Scholar</div>
-        <div class="cc-desc">Publications, citations, and preprints</div>
-        <div class="cc-link">Scholar Profile ↗</div>
-      </a>
-      <a href="http://www.linkedin.com/in/saumitra-phatak" target="_blank" class="connect-card">
-        <div class="cc-icon">💼</div>
-        <div class="cc-label">LinkedIn</div>
-        <div class="cc-desc">Professional background and experience</div>
-        <div class="cc-link">linkedin.com/in/saumitra-phatak ↗</div>
-      </a>
-      <a href="https://www.instagram.com/curious_poem" target="_blank" class="connect-card">
-        <div class="cc-icon">📷</div>
-        <div class="cc-label">@curious_poem</div>
-        <div class="cc-desc">Poetry in Marathi, Hindi, and English</div>
-        <div class="cc-link">Instagram ↗</div>
-      </a>
-    </div>
+      <div class="pub">
+        <div class="pub-year">2024 · Physical Review A</div>
+        <div class="pub-title">A Generalized Theory for Optical Cooling of a Trapped Atom with Spin</div>
+        <div class="pub-authors">S. S. Phatak, K. N. Blodgett, D. Peana, M. R. Chen, J. D. Hood</div>
+        <div class="pub-venue">Physical Review A 110, 043116</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2406.19153" target="_blank" class="pub-link">arXiv ↗</a>
+          <a href="https://doi.org/10.1103/PhysRevA.110.043116" target="_blank" class="pub-link">DOI ↗</a>
+        </div>
+      </div>
 
-    <!-- Sites Banner -->
-    <div class="sites-banner fade-in" style="margin-top:16px;">
-      <a href="https://www.curious96.com" target="_blank" class="site-card">
-        <div class="sc-info">
-          <div class="sc-label">Personal Website</div>
-          <div class="sc-name">curious96.com</div>
-          <div class="sc-desc">Blogs, poetry, CV, and the full story</div>
+      <div class="pub">
+        <div class="pub-year">2023 · Physical Review Letters</div>
+        <div class="pub-title">Imaging a Li-6 Atom in an Optical Tweezer 2000 Times with Λ-Enhanced Gray Molasses</div>
+        <div class="pub-authors">K. N. Blodgett, D. Peana, S. S. Phatak, L. M. Terry, M. P. Montes, J. D. Hood</div>
+        <div class="pub-venue">Physical Review Letters 131, 083001</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2305.02405" target="_blank" class="pub-link">arXiv ↗</a>
+          <a href="https://doi.org/10.1103/PhysRevLett.131.083001" target="_blank" class="pub-link">DOI ↗</a>
         </div>
-        <div class="sc-arrow">↗</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="container">
+    <p class="sec-label">Teaching</p>
+    <h2 class="sec-title">Teaching experience</h2>
+    <p class="sec-body">
+      I've served as a teaching assistant at Purdue across multiple semesters, covering courses
+      from introductory physics labs to upper-division coursework. I try to make office hours
+      genuinely useful — working through problems together rather than just providing answers.
+    </p>
+    <div class="teaching-list">
+      <div class="t-item">
+        <div>
+          <div class="t-role">Teaching Assistant</div>
+          <div class="t-course">PHYS 17200 — Modern Mechanics (algebra-based)</div>
+        </div>
+        <div class="t-year">Purdue University</div>
+      </div>
+      <div class="t-item">
+        <div>
+          <div class="t-role">Teaching Assistant</div>
+          <div class="t-course">PHYS 27200 — Electric and Magnetic Interactions</div>
+        </div>
+        <div class="t-year">Purdue University</div>
+      </div>
+      <div class="t-item">
+        <div>
+          <div class="t-role">Teaching Assistant</div>
+          <div class="t-course">PHYS 34100 — Quantum Mechanics I</div>
+        </div>
+        <div class="t-year">Purdue University</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <p class="sec-label">Education</p>
+    <h2 class="sec-title">Academic background</h2>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-degree">Ph.D. in Physics — Purdue University <span style="color:var(--muted); font-weight:400">(2021 – present)</span></div>
+        <div class="edu-school">Advisor: Dr. Jonathan Hood · Thesis: Cooling and Interactions with Ultracold Li and Cs Atoms in Optical Tweezers</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">M.Sc. in Physics — Mumbai University <span style="color:var(--muted); font-weight:400">(2017 – 2019)</span></div>
+        <div class="edu-school">Tata Institute of Fundamental Research · CGPA 9.25/10</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.Sc. in Physics — Ramnarain Ruia College, Mumbai <span style="color:var(--muted); font-weight:400">(2014 – 2017)</span></div>
+        <div class="edu-school">CGPA 6.86/7.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="container">
+    <p class="sec-label">Contact</p>
+    <h2 class="sec-title">Get in touch</h2>
+    <p class="sec-body">
+      I'm happy to hear from anyone interested in AMO physics, quantum optics, or just
+      curious about what we do in the lab. Feel free to reach out.
+    </p>
+    <div class="connect-grid">
+      <a href="mailto:phataks@purdue.edu" class="c-link">
+        <span class="c-icon">✉</span> phataks@purdue.edu
       </a>
-      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="site-card">
-        <div class="sc-info">
-          <div class="sc-label">Interactive App</div>
-          <div class="sc-name">Quantum Explorer ⚛</div>
-          <div class="sc-desc">Visualise qubits, gates, and entanglement</div>
-        </div>
-        <div class="sc-arrow">↗</div>
+      <a href="https://www.linkedin.com/in/saumitraphatak" target="_blank" class="c-link">
+        <span class="c-icon">in</span> LinkedIn
+      </a>
+      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank" class="c-link">
+        <span class="c-icon">🎓</span> Google Scholar
+      </a>
+      <a href="https://www.curious96.com" target="_blank" class="c-link">
+        <span class="c-icon">🌐</span> curious96.com
+      </a>
+      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="c-link">
+        <span class="c-icon">⚛</span> Quantum Explorer
       </a>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-name">Saumitra Phatak</div>
-  <div class="footer-sub">Physics PhD Candidate · Purdue University · © 2025</div>
+  Saumitra Phatak · Purdue University · phataks@purdue.edu
 </footer>
 
-<!-- ── SCRIPTS ── -->
-<script>
-  /* ── Starfield ── */
-  (function () {
-    const canvas = document.getElementById('stars-canvas');
-    const ctx    = canvas.getContext('2d');
-    let W, H, stars = [];
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-
-    function initStars(n = 220) {
-      stars = [];
-      for (let i = 0; i < n; i++) {
-        stars.push({
-          x:  Math.random() * W,
-          y:  Math.random() * H,
-          r:  Math.random() * 1.4 + 0.2,
-          a:  Math.random(),
-          da: (Math.random() - 0.5) * 0.004,
-        });
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      stars.forEach(s => {
-        s.a += s.da;
-        if (s.a <= 0 || s.a >= 1) s.da *= -1;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,220,255,${s.a * 0.7})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', () => { resize(); initStars(); });
-    resize(); initStars(); draw();
-  })();
-
-  /* ── Scroll fade-in ── */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  /* ── Mobile menu ── */
-  function toggleMenu() {
-    document.getElementById('mobile-menu').classList.toggle('open');
-  }
-  function closeMenu() {
-    document.getElementById('mobile-menu').classList.remove('open');
-  }
-
-  /* ── Tab switcher ── */
-  function switchTab(name) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    event.target.classList.add('active');
-  }
-
-  /* ── Navbar shadow on scroll ── */
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    nav.style.background = window.scrollY > 20
-      ? 'rgba(5,8,15,0.97)'
-      : 'rgba(5,8,15,0.8)';
-  });
-</script>
 </body>
 </html>
