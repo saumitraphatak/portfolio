@@ -13,9 +13,13 @@
       --text:    #1c1917;
       --muted:   #6b7280;
       --accent:  #1d4ed8;
-      --light-accent: #eff6ff;
+      --accent-bg: #eff6ff;
+      --green:   #166534;
+      --green-bg:#f0fdf4;
+      --amber:   #92400e;
+      --amber-bg:#fffbeb;
       --radius:  10px;
-      --max:     720px;
+      --max:     740px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,109 +38,110 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.93);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
+      height: 54px;
     }
-    .nav-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .nav-name { font-size: 14px; font-weight: 600; color: var(--text); }
     .nav-links { display: flex; gap: 24px; list-style: none; }
     .nav-links a { font-size: 13px; color: var(--muted); font-weight: 500; }
     .nav-links a:hover { color: var(--text); text-decoration: none; }
 
     /* ── LAYOUT ── */
     .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    section { padding: 72px 0 56px; border-bottom: 1px solid var(--border); }
+    section { padding: 68px 0 52px; border-bottom: 1px solid var(--border); }
     section:last-of-type { border-bottom: none; }
 
     /* ── HERO ── */
-    #hero { padding: 80px 0 64px; }
+    #hero { padding: 76px 0 60px; }
     .hero-label {
       font-size: 12px; font-weight: 500; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
     }
     .hero-name {
       font-family: 'Lora', serif;
-      font-size: clamp(36px, 6vw, 52px);
+      font-size: clamp(34px, 6vw, 50px);
       font-weight: 600; line-height: 1.15;
-      color: var(--text); margin-bottom: 14px;
+      color: var(--text); margin-bottom: 12px;
     }
-    .hero-role {
-      font-size: 16px; color: var(--muted); margin-bottom: 28px;
-      font-weight: 400;
-    }
+    .hero-role { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
     .hero-intro {
-      font-size: 16px; color: var(--text); line-height: 1.8;
-      max-width: 620px; margin-bottom: 32px;
+      font-size: 15px; color: var(--text); line-height: 1.85;
+      max-width: 640px; margin-bottom: 32px;
     }
-    .hero-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 9px; }
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: var(--radius);
+      padding: 8px 15px; border-radius: var(--radius);
       font-size: 13px; font-weight: 500; transition: all .15s;
       border: 1px solid transparent;
     }
-    .btn-primary {
-      background: var(--accent); color: #fff;
-      border-color: var(--accent);
-    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
     .btn-primary:hover { background: #1e40af; text-decoration: none; }
-    .btn-outline {
-      background: var(--white); color: var(--text);
-      border-color: var(--border);
-    }
+    .btn-outline { background: var(--white); color: var(--text); border-color: var(--border); }
     .btn-outline:hover { border-color: #aaa; text-decoration: none; }
 
     /* ── SECTION HEADERS ── */
     .sec-label {
       font-size: 11px; font-weight: 600; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
     }
     .sec-title {
       font-family: 'Lora', serif;
-      font-size: clamp(22px, 3.5vw, 28px);
+      font-size: clamp(21px, 3.5vw, 27px);
       font-weight: 600; color: var(--text);
-      margin-bottom: 20px; line-height: 1.3;
+      margin-bottom: 18px; line-height: 1.3;
     }
-    .sec-body { color: var(--text); line-height: 1.8; }
-    .sec-body p + p { margin-top: 14px; }
+    .sec-body { color: var(--text); line-height: 1.85; }
+    .sec-body p + p { margin-top: 13px; }
 
     /* ── RESEARCH CARDS ── */
-    .research-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+    .research-grid { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
     .r-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      background: var(--off);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px 22px; background: var(--off);
     }
     .r-tag {
-      display: inline-block;
-      font-size: 11px; font-weight: 600;
-      color: var(--accent); background: var(--light-accent);
-      padding: 2px 8px; border-radius: 4px;
-      margin-bottom: 8px; text-transform: uppercase; letter-spacing: .05em;
+      display: inline-block; font-size: 11px; font-weight: 600;
+      color: var(--accent); background: var(--accent-bg);
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: .05em;
     }
     .r-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
-    .r-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .r-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
 
     /* ── PUBLICATIONS ── */
-    .pub-list { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
-    .pub {
-      border-left: 3px solid var(--border);
-      padding-left: 16px;
+    .pub-list { display: flex; flex-direction: column; gap: 22px; margin-top: 28px; }
+    .pub { border-left: 3px solid var(--border); padding-left: 18px; }
+    .pub-status {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 5px;
+      text-transform: uppercase; letter-spacing: .04em;
     }
-    .pub-year { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+    .status-published { background: var(--green-bg); color: var(--green); }
+    .status-preprint  { background: var(--accent-bg); color: var(--accent); }
+    .status-prep      { background: var(--amber-bg); color: var(--amber); }
     .pub-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
-    .pub-authors { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-    .pub-venue { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
-    .pub-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pub-authors { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .pub-venue { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+    .pub-links { display: flex; gap: 8px; flex-wrap: wrap; }
     .pub-link {
       font-size: 12px; font-weight: 500; color: var(--accent);
-      background: var(--light-accent); padding: 2px 8px; border-radius: 4px;
+      background: var(--accent-bg); padding: 2px 9px; border-radius: 4px;
     }
     .pub-link:hover { text-decoration: none; opacity: .8; }
+
+    /* ── METHODS ── */
+    .methods-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .method-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px 18px; background: var(--off);
+    }
+    .method-title { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    .method-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
     /* ── TEACHING ── */
     .teaching-list { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
@@ -144,6 +149,19 @@
     .t-role { font-size: 14px; font-weight: 500; }
     .t-course { font-size: 13px; color: var(--muted); margin-top: 2px; }
     .t-year { font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+    /* ── EDUCATION ── */
+    .edu-list { display: flex; flex-direction: column; gap: 18px; margin-top: 24px; }
+    .edu-degree { font-size: 14px; font-weight: 500; color: var(--text); }
+    .edu-school { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ── CONTEXT BOX ── */
+    .context-box {
+      background: var(--off); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 22px;
+      margin-top: 24px; font-size: 14px; line-height: 1.8; color: var(--text);
+    }
+    .context-box p + p { margin-top: 12px; }
 
     /* ── CONNECT ── */
     .connect-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
@@ -155,26 +173,18 @@
       transition: border-color .15s;
     }
     .c-link:hover { border-color: #999; text-decoration: none; }
-    .c-icon { font-size: 15px; }
-
-    /* ── EDUCATION ── */
-    .edu-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
-    .edu-item {}
-    .edu-degree { font-size: 14px; font-weight: 500; color: var(--text); }
-    .edu-school { font-size: 13px; color: var(--muted); }
 
     /* ── FOOTER ── */
     footer {
-      padding: 28px 24px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
+      padding: 28px 24px; text-align: center;
+      font-size: 12px; color: var(--muted);
       border-top: 1px solid var(--border);
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .nav-links { display: none; }
+      .methods-grid { grid-template-columns: 1fr; }
       .t-item { flex-direction: column; gap: 2px; }
     }
   </style>
@@ -187,6 +197,7 @@
   <ul class="nav-links">
     <li><a href="#research">Research</a></li>
     <li><a href="#publications">Publications</a></li>
+    <li><a href="#methods">Methods</a></li>
     <li><a href="#teaching">Teaching</a></li>
     <li><a href="#connect">Contact</a></li>
   </ul>
@@ -195,16 +206,18 @@
 <!-- HERO -->
 <section id="hero">
   <div class="container">
-    <p class="hero-label">Physics · Purdue University</p>
+    <p class="hero-label">AMO Physics · Purdue University</p>
     <h1 class="hero-name">Saumitra Phatak</h1>
-    <p class="hero-role">PhD Candidate · Department of Physics · Advised by Dr. Jonathan Hood</p>
+    <p class="hero-role">PhD Candidate · Department of Physics and Astronomy · Advised by Dr. Jonathan Hood</p>
     <p class="hero-intro">
-      I'm a fifth-year PhD student in the Hood Lab at Purdue University, originally from Mumbai, India.
-      My research is in atomic, molecular, and optical (AMO) physics — specifically, trapping and cooling
-      individual atoms in optical tweezers to explore quantum interactions at the single-particle level.
+      I'm a PhD student in the Hood Lab at Purdue University, originally from Mumbai, India.
+      My doctoral work, submitted in May 2025, focuses on trapping and cooling individual lithium
+      and cesium atoms in optical tweezers — tightly focused laser beams that can hold a single
+      atom in place. The goal is to understand and improve the cooling and imaging techniques
+      that form the foundation of single-atom quantum control.
     </p>
     <div class="hero-links">
-      <a href="mailto:phataks@purdue.edu" class="btn btn-primary">✉ Email me</a>
+      <a href="mailto:phataks@purdue.edu" class="btn btn-primary">✉ phataks@purdue.edu</a>
       <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank" class="btn btn-outline">Google Scholar</a>
       <a href="https://www.curious96.com" target="_blank" class="btn btn-outline">curious96.com ↗</a>
       <a href="https://quantumexplorer.streamlit.app" target="_blank" class="btn btn-outline">⚛ Quantum Explorer</a>
@@ -216,51 +229,89 @@
 <section id="research">
   <div class="container">
     <p class="sec-label">Research</p>
-    <h2 class="sec-title">Cooling and controlling individual atoms</h2>
+    <h2 class="sec-title">Cooling and imaging single atoms in optical tweezers</h2>
     <div class="sec-body">
       <p>
-        I work in Dr. Jonathan Hood's lab, where we use tightly focused laser beams — optical tweezers —
-        to trap single neutral atoms and study them in isolation. My work involves developing cooling
-        techniques to bring atoms close to their motional ground state, and building toward
-        experiments with mixtures of lithium and cesium atoms.
+        Optical tweezers — tightly focused laser beams — can trap a single neutral atom and
+        hold it in isolation. Working with individual atoms this way lets us study quantum
+        phenomena without averaging over large ensembles, but it also demands very precise
+        control over the atom's internal and motional states. My thesis addresses some of
+        the practical challenges involved in cooling these atoms and reading out their state
+        with high reliability.
       </p>
     </div>
 
     <div class="research-grid">
 
       <div class="r-card">
-        <span class="r-tag">Lithium</span>
-        <div class="r-title">Single ⁶Li atom in an optical tweezer</div>
+        <span class="r-tag">Lithium · Chapter 3</span>
+        <div class="r-title">Cooling and imaging ⁶Li in an optical tweezer</div>
         <div class="r-desc">
-          We developed a way to load a single lithium-6 atom directly from a magneto-optical trap
-          into an optical tweezer, and used Λ-enhanced gray molasses cooling to image it with
-          high fidelity over many repeated exposures. This work also led to a theoretical framework
-          for optical cooling in tight traps.
+          Loading a single lithium-6 atom into a tweezer is challenging because ⁶Li is the
+          lightest alkali, with a large recoil energy and unresolved hyperfine structure that
+          makes standard cooling approaches less effective. We used Λ-enhanced gray molasses
+          on the D1 line to simultaneously cool and image a single ⁶Li atom, achieving a
+          survival probability of 0.9995 per image over ~2000 consecutive imaging cycles.
+          Understanding why the cooling worked as well as it did led directly to the theoretical
+          work in Chapter 2.
         </div>
       </div>
 
       <div class="r-card">
-        <span class="r-tag">Cesium</span>
-        <div class="r-title">Narrow-line cooling of ¹³³Cs</div>
+        <span class="r-tag">Theory · Chapter 2</span>
+        <div class="r-title">A generalized framework for optical cooling in tight traps</div>
         <div class="r-desc">
-          We explored narrow-line quadrupole cooling of cesium atoms using the weak
-          6S₁/₂–5D₅/₂ transition, combined with vortex beams generated via a spatial light
-          modulator. This allowed us to cool Cs atoms to a few microkelvin and image them
-          with a suppressed background.
+          To make sense of the experimental results with ⁶Li, we developed a 1D theoretical
+          framework that treats sideband cooling, polarization gradient cooling, and gray molasses
+          within a single master-equation formalism. The model revealed the relative efficiencies
+          of different cooling strategies and showed that gray molasses can drive atoms close to
+          their motional ground state in the Lamb-Dicke regime — a result that had not been
+          worked out in detail before.
         </div>
       </div>
 
       <div class="r-card">
-        <span class="r-tag">Future work</span>
-        <div class="r-title">Toward ultracold LiCs molecules</div>
+        <span class="r-tag">Cesium · Chapter 4</span>
+        <div class="r-title">Narrow-line quadrupole cooling of ¹³³Cs</div>
         <div class="r-desc">
-          The longer-term goal of the lab is to bring Li and Cs atoms together in shared tweezers,
-          perform Feshbach spectroscopy, and eventually form ground-state LiCs molecules.
-          The large mass imbalance between Li and Cs also makes sympathetic cooling an
-          interesting possibility to explore.
+          Cesium atoms can be cooled using the weak electric-quadrupole transition at 685 nm
+          (6S₁/₂ → 5D₅/₂, linewidth ~118 kHz), which is narrow enough to resolve individual
+          motional sidebands. We used a spatial light modulator to generate vortex beams with
+          tailored orbital angular momentum for background-free imaging, and applied
+          magic-ellipticity polarization to suppress differential light shifts. This allowed us
+          to cool Cs atoms to ~5 µK in a 2 mK deep tweezer and image them with a suppressed
+          photon background.
         </div>
       </div>
 
+      <div class="r-card">
+        <span class="r-tag">Future directions · Chapter 7</span>
+        <div class="r-title">Toward ultracold Li–Cs mixtures</div>
+        <div class="r-desc">
+          The longer-term aim of the lab is to trap Li and Cs atoms together in a shared tweezer,
+          perform Feshbach spectroscopy to map out their interspecies interactions, and eventually
+          form ground-state LiCs molecules — which have a large permanent electric dipole moment
+          (~5.5 Debye). The large mass imbalance between the two species also makes sympathetic
+          cooling worth exploring, alongside 3D extensions of the cooling simulations developed
+          in this thesis.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Broader context -->
+    <div class="context-box">
+      <p>
+        <strong>Why this matters beyond the lab.</strong> Optical tweezer arrays are one of the
+        leading platforms for neutral-atom quantum computing — companies including QuEra, Atom
+        Computing, and Infleqtion are building processors along these lines. Two of the main
+        technical bottlenecks are imaging fidelity (how reliably you can read out qubit states
+        without losing the atom) and qubit temperature (a warmer atom accumulates more errors
+        during two-qubit gates). The Li and Cs work in this thesis addresses both of those
+        directly. That said, the path to fault-tolerant quantum computing is genuinely long,
+        and the contribution here is at the level of improving individual components — not
+        solving the problem.
+      </p>
     </div>
   </div>
 </section>
@@ -270,28 +321,29 @@
   <div class="container">
     <p class="sec-label">Publications</p>
     <h2 class="sec-title">Research output</h2>
-    <p style="color:var(--muted); font-size:14px;">
-      Full list on
-      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank">Google Scholar ↗</a>
+    <p style="color:var(--muted); font-size:13px;">
+      Full list: <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank">Google Scholar ↗</a>
+      &nbsp;·&nbsp; (* equal contribution)
     </p>
 
     <div class="pub-list">
 
       <div class="pub">
-        <div class="pub-year">2025 · Preprint</div>
-        <div class="pub-title">Narrow-line Quadrupole Cooling of a Cs Atom in a Tweezer</div>
+        <span class="pub-status status-published">Published · PRA 2025</span>
+        <div class="pub-title">Narrow-Line Electric Quadrupole Cooling and Background-Free Imaging of a Single Cs Atom with Spatially Structured Light</div>
         <div class="pub-authors">K. N. Blodgett*, S. S. Phatak*, M. R. Chen, D. Peana, C. Pritts, J. D. Hood</div>
-        <div class="pub-venue">Submitted to Physical Review X — arXiv preprint</div>
+        <div class="pub-venue">Physical Review A 112, 043109 (2025)</div>
         <div class="pub-links">
           <a href="https://arxiv.org/abs/2505.10540" target="_blank" class="pub-link">arXiv ↗</a>
+          <a href="https://doi.org/10.1103/vr4g-h995" target="_blank" class="pub-link">DOI ↗</a>
         </div>
       </div>
 
       <div class="pub">
-        <div class="pub-year">2024 · Physical Review A</div>
-        <div class="pub-title">A Generalized Theory for Optical Cooling of a Trapped Atom with Spin</div>
+        <span class="pub-status status-published">Published · PRA 2024</span>
+        <div class="pub-title">Generalized Theory for Optical Cooling of a Trapped Atom with Spin</div>
         <div class="pub-authors">S. S. Phatak, K. N. Blodgett, D. Peana, M. R. Chen, J. D. Hood</div>
-        <div class="pub-venue">Physical Review A 110, 043116</div>
+        <div class="pub-venue">Physical Review A 110, 043116 (2024)</div>
         <div class="pub-links">
           <a href="https://arxiv.org/abs/2406.19153" target="_blank" class="pub-link">arXiv ↗</a>
           <a href="https://doi.org/10.1103/PhysRevA.110.043116" target="_blank" class="pub-link">DOI ↗</a>
@@ -299,14 +351,54 @@
       </div>
 
       <div class="pub">
-        <div class="pub-year">2023 · Physical Review Letters</div>
-        <div class="pub-title">Imaging a Li-6 Atom in an Optical Tweezer 2000 Times with Λ-Enhanced Gray Molasses</div>
+        <span class="pub-status status-published">Published · PRL 2023</span>
+        <div class="pub-title">Imaging a ⁶Li Atom in an Optical Tweezer 2000 Times with Λ-Enhanced Gray Molasses</div>
         <div class="pub-authors">K. N. Blodgett, D. Peana, S. S. Phatak, L. M. Terry, M. P. Montes, J. D. Hood</div>
-        <div class="pub-venue">Physical Review Letters 131, 083001</div>
+        <div class="pub-venue">Physical Review Letters 131, 083001 (2023)</div>
         <div class="pub-links">
           <a href="https://arxiv.org/abs/2305.02405" target="_blank" class="pub-link">arXiv ↗</a>
           <a href="https://doi.org/10.1103/PhysRevLett.131.083001" target="_blank" class="pub-link">DOI ↗</a>
         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METHODS -->
+<section id="methods">
+  <div class="container">
+    <p class="sec-label">Methods &amp; Tools</p>
+    <h2 class="sec-title">Technical approaches used in this work</h2>
+    <p class="sec-body">
+      The thesis involves a mix of experimental hardware, laser physics, and computational tools.
+      A few worth mentioning:
+    </p>
+    <div class="methods-grid">
+
+      <div class="method-card">
+        <div class="method-title">Spatial Light Modulators (SLMs)</div>
+        <div class="method-desc">Used to generate vortex beams with controlled orbital angular momentum for background-free Cs imaging. The SLM lets us shape the transverse phase profile of the 685 nm beam in real time.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-title">Gaussian Process Optimization</div>
+        <div class="method-desc">Experimental parameters (trap depth, laser detuning, pulse durations) were optimized using Gaussian process regression, which makes efficient use of noisy measurements to find good operating points.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-title">QuTiP Simulations</div>
+        <div class="method-desc">The cooling theory was validated with open quantum systems simulations using QuTiP (Python), solving the Lindblad master equation for a bound atom with spin in the Lamb-Dicke regime.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-title">Laser Frequency Stabilization</div>
+        <div class="method-desc">Multiple laser systems (671 nm, 685 nm, 852 nm, 1064 nm) are stabilized using saturated-absorption spectroscopy, beat-note locking, and Pound-Drever-Hall cavity locking in a hierarchy suited to each application.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="method-title">Magic-Ellipticity Polarization</div>
+        <div class="method-desc">For Cs sideband cooling, a specific trap polarization was tuned to equalize the AC Stark shifts of the ground and excited states, suppressing differential light shifts that would otherwise broaden the cooling transition.</div>
       </div>
 
     </div>
@@ -319,31 +411,32 @@
     <p class="sec-label">Teaching</p>
     <h2 class="sec-title">Teaching experience</h2>
     <p class="sec-body">
-      I've served as a teaching assistant at Purdue across multiple semesters, covering courses
-      from introductory physics labs to upper-division coursework. I try to make office hours
-      genuinely useful — working through problems together rather than just providing answers.
+      I've served as a teaching assistant at Purdue across several semesters, including both
+      introductory and upper-division courses. I find it useful to work through problems
+      together in office hours rather than just presenting solutions — it tends to surface
+      where the actual confusion is.
     </p>
     <div class="teaching-list">
       <div class="t-item">
         <div>
           <div class="t-role">Teaching Assistant</div>
-          <div class="t-course">PHYS 17200 — Modern Mechanics (algebra-based)</div>
+          <div class="t-course">PHYS 34100 — Quantum Mechanics I</div>
         </div>
-        <div class="t-year">Purdue University</div>
+        <div class="t-year">Purdue</div>
       </div>
       <div class="t-item">
         <div>
           <div class="t-role">Teaching Assistant</div>
           <div class="t-course">PHYS 27200 — Electric and Magnetic Interactions</div>
         </div>
-        <div class="t-year">Purdue University</div>
+        <div class="t-year">Purdue</div>
       </div>
       <div class="t-item">
         <div>
           <div class="t-role">Teaching Assistant</div>
-          <div class="t-course">PHYS 34100 — Quantum Mechanics I</div>
+          <div class="t-course">PHYS 17200 — Modern Mechanics</div>
         </div>
-        <div class="t-year">Purdue University</div>
+        <div class="t-year">Purdue</div>
       </div>
     </div>
   </div>
@@ -356,15 +449,30 @@
     <h2 class="sec-title">Academic background</h2>
     <div class="edu-list">
       <div class="edu-item">
-        <div class="edu-degree">Ph.D. in Physics — Purdue University <span style="color:var(--muted); font-weight:400">(2021 – present)</span></div>
-        <div class="edu-school">Advisor: Dr. Jonathan Hood · Thesis: Cooling and Interactions with Ultracold Li and Cs Atoms in Optical Tweezers</div>
+        <div class="edu-degree">
+          Ph.D. in Physics — Purdue University
+          <span style="color:var(--muted); font-weight:400">(2021 – 2025)</span>
+        </div>
+        <div class="edu-school">
+          Advisor: Dr. Jonathan Hood ·
+          Thesis: <em>Cooling Lithium and Cesium Single Atoms in Optical Tweezers</em>
+        </div>
       </div>
       <div class="edu-item">
-        <div class="edu-degree">M.Sc. in Physics — Mumbai University <span style="color:var(--muted); font-weight:400">(2017 – 2019)</span></div>
-        <div class="edu-school">Tata Institute of Fundamental Research · CGPA 9.25/10</div>
+        <div class="edu-degree">
+          M.Sc. in Physics — Mumbai University
+          <span style="color:var(--muted); font-weight:400">(2017 – 2019)</span>
+        </div>
+        <div class="edu-school">
+          Research at TIFR · CGPA 9.25/10 ·
+          Thesis: Reaction Microscope design for ion/electron trajectory simulations
+        </div>
       </div>
       <div class="edu-item">
-        <div class="edu-degree">B.Sc. in Physics — Ramnarain Ruia College, Mumbai <span style="color:var(--muted); font-weight:400">(2014 – 2017)</span></div>
+        <div class="edu-degree">
+          B.Sc. in Physics — Ramnarain Ruia College, Mumbai
+          <span style="color:var(--muted); font-weight:400">(2014 – 2017)</span>
+        </div>
         <div class="edu-school">CGPA 6.86/7.00</div>
       </div>
     </div>
@@ -377,25 +485,15 @@
     <p class="sec-label">Contact</p>
     <h2 class="sec-title">Get in touch</h2>
     <p class="sec-body">
-      I'm happy to hear from anyone interested in AMO physics, quantum optics, or just
-      curious about what we do in the lab. Feel free to reach out.
+      Happy to hear from anyone interested in AMO physics, optical tweezers, or quantum
+      computing hardware. Feel free to reach out by email.
     </p>
     <div class="connect-grid">
-      <a href="mailto:phataks@purdue.edu" class="c-link">
-        <span class="c-icon">✉</span> phataks@purdue.edu
-      </a>
-      <a href="https://www.linkedin.com/in/saumitraphatak" target="_blank" class="c-link">
-        <span class="c-icon">in</span> LinkedIn
-      </a>
-      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank" class="c-link">
-        <span class="c-icon">🎓</span> Google Scholar
-      </a>
-      <a href="https://www.curious96.com" target="_blank" class="c-link">
-        <span class="c-icon">🌐</span> curious96.com
-      </a>
-      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="c-link">
-        <span class="c-icon">⚛</span> Quantum Explorer
-      </a>
+      <a href="mailto:phataks@purdue.edu" class="c-link">✉ phataks@purdue.edu</a>
+      <a href="https://www.linkedin.com/in/saumitraphatak" target="_blank" class="c-link">in LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=sFSr0coAAAAJ" target="_blank" class="c-link">🎓 Google Scholar</a>
+      <a href="https://www.curious96.com" target="_blank" class="c-link">🌐 curious96.com</a>
+      <a href="https://quantumexplorer.streamlit.app" target="_blank" class="c-link">⚛ Quantum Explorer</a>
     </div>
   </div>
 </section>
